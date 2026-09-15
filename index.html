@@ -303,7 +303,28 @@ button:active {
 
         </div>
 
-        <div id="question">Waiting for your command...</div>
+        <div id="question">Ask JARVIS anything...</div>
+
+<input
+    id="userQuestion"
+    type="text"
+    placeholder="Type your question..."
+    style="
+        margin-top:15px;
+        width:280px;
+        padding:14px;
+        border:1px solid #00eaff;
+        border-radius:25px;
+        background:#001525;
+        color:#00eaff;
+        text-align:center;
+        outline:none;
+    "
+>
+
+<button onclick="askJarvis()">
+    ASK JARVIS
+</button>
 
         <button onclick="activateJarvis()">
             🎙 ACTIVATE JARVIS
