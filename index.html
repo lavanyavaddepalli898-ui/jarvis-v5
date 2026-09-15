@@ -340,7 +340,11 @@ button:active {
 </div>
 
 <script>
-
+function askJarvis() {
+    const q = document.getElementById("userQuestion").value;
+    document.getElementById("question").innerText = "Question received: " + q;
+    speak("I received your question. The AI brain is not connected yet.");
+}
 function speak(text) {
 
     speechSynthesis.cancel();
