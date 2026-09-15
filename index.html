@@ -340,7 +340,19 @@ button:active {
 </div>
 
 <script>
-function askJarvis() {
+function function askJarvis() {
+    const q = document.getElementById("userQuestion").value;
+
+    if (!q.trim()) {
+        document.getElementById("question").innerText = "Please type a question.";
+        return;
+    }
+
+    document.getElementById("question").innerText =
+        "JARVIS received: " + q;
+
+    speak("Question received.");
+} {
     const q = document.getElementById("userQuestion").value;
     document.getElementById("question").innerText = "Question received: " + q;
     speak("I received your question. The AI brain is not connected yet.");
