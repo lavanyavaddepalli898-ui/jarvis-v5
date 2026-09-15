@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS V5</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at center,
+        #07365d 0%,
+        #021321 35%,
+        #00060d 75%);
+    color: #00eaff;
+    font-family: Arial, sans-serif;
+}
+
+.hud {
+    width: 100%;
+    min-height: 100vh;
+    padding: 18px;
+    position: relative;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #00eaff;
+}
+
+.panel {
+    border: 1px solid #00c8ff;
+    background: rgba(0, 25, 50, 0.55);
+    box-shadow:
+        0 0 12px #008cff,
+        inset 0 0 20px rgba(0,200,255,.12);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.panel h3 {
+    margin: 0 0 15px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+
+.panel p {
+    margin: 12px 0;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.left {
+    position: absolute;
+    left: 18px;
+    top: 100px;
+    width: 25%;
+}
+
+.right {
+    position: absolute;
+    right: 18px;
+    top: 100px;
+    width: 25%;
+}
+
+.center {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.core {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 5px solid #00eaff;
+
+    box-shadow:
+        0 0 15px #00eaff,
+        0 0 40px #008cff,
+        0 0 90px rgba(0,170,255,.7),
+        inset 0 0 40px #008cff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    animation: pulse 2s infinite;
+}
+
+.core::before {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    border: 3px dashed #00c8ff;
+    animation: rotate 7s linear infinite;
+}
+
+.core::after {
+    content: "";
+    position: absolute;
+    width: 315px;
+    height: 315px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,200,255,.5);
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    animation: rotateReverse 10s linear infinite;
+}
+
+.logo {
+    z-index: 5;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 30px;
+    letter-spacing: 7px;
+    text-shadow:
+        0 0 10px #00eaff,
+        0 0 25px #008cff;
+}
+
+.logo span {
+    display: block;
+    margin-top: 12px;
+    font-size: 22px;
+    letter-spacing: 5px;
+}
+
+#question {
+    margin-top: 25px;
+    min-height: 25px;
+    max-width: 320px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+button {
+    margin-top: 35px;
+    padding: 18px 45px;
+
+    border: 2px solid #00eaff;
+    border-radius: 50px;
+
+    background: rgba(0,40,70,.7);
+    color: #00eaff;
+
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    box-shadow:
+        0 0 15px #00eaff,
+        0 0 35px rgba(0,180,255,.5);
+}
+
+button:active {
+    transform: scale(.95);
+}
+
+.bottom {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 20px;
+
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotateReverse {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes pulse {
+    0%,100% {
+        box-shadow:
+            0 0 15px #00eaff,
+            0 0 40px #008cff,
+            inset 0 0 40px #008cff;
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px #00eaff,
+            0 0 80px #008cff,
+            inset 0 0 60px #008cff;
+    }
+}
+
+@media(max-width:700px) {
+
+    .left,
+    .right {
+        display: none;
+    }
+
+    .center {
+        top: 48%;
+    }
+
+    .core {
+        width: 230px;
+        height: 230px;
+    }
+
+    .core::before {
+        width: 175px;
+        height: 175px;
+    }
+
+    .core::after {
+        width: 260px;
+        height: 260px;
+    }
+
+    .logo h1 {
+        font-size: 24px;
+    }
+
+    button {
+        margin-top: 35px;
+        padding: 16px 30px;
+        font-size: 15px;
+    }
+
+    .bottom {
+        font-size: 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="hud">
+
+    <div class="topbar">
+        <span id="clock">00:00:00</span>
+        <span>J.A.R.V.I.S. V5</span>
+        <span>SYSTEM ONLINE</span>
+    </div>
+
+    <div class="panel left">
+        <h3>JARVIS SYSTEM</h3>
+        <p>🎙 VOICE ASSISTANT</p>
+        <p>◉ INTERNET</p>
+        <p>▦ APPLICATIONS</p>
+        <p>⚙ SYSTEM</p>
+        <p>◉ SETTINGS</p>
+    </div>
+
+    <div class="panel right">
+        <h3>STATUS</h3>
+        <p>AI CORE ........ ONLINE</p>
+        <p>VOICE ........... READY</p>
+        <p>MEMORY .......... NORMAL</p>
+        <p>NETWORK ......... CONNECTED</p>
+        <p>DIAGNOSTICS ..... READY</p>
+    </div>
+
+    <div class="center">
+
+        <div class="core">
+
+            <div class="logo">
+                <h1>J.A.R.V.I.S.</h1>
+                <span>V5</span>
+            </div>
+
+        </div>
+
+        <div id="question">Waiting for your command...</div>
+
+        <button onclick="activateJarvis()">
+            🎙 ACTIVATE JARVIS
+        </button>
+
+    </div>
+
+    <div class="bottom">
+        <span>JUST A RATHER VERY INTELLIGENT SYSTEM</span>
+        <span>ALL SYSTEMS ONLINE</span>
+    </div>
+
+</div>
+
+<script>
+
+function speak(text) {
+
+    speechSynthesis.cancel();
+
+    const voice = new SpeechSynthesisUtterance(text);
+
+    voice.lang = "en-US";
+    voice.rate = 0.9;
+    voice.pitch = 0.8;
+    voice.volume = 1;
+
+    speechSynthesis.speak(voice);
+}
+
+
+function activateJarvis() {
+
+    speak("Hello. I am Jarvis. What would you like to know?");
+
+    const Recognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!Recognition) {
+        speak("Voice recognition is not supported on this browser.");
+        return;
+    }
+
+    const recognition = new Recognition();
+
+    recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onresult = function(event) {
+
+        const question =
+            event.results[0][0].transcript;
+
+        document.getElementById("question").innerText =
+            question;
+
+        speak("I heard your question. My AI brain will answer it once we connect the secure AI service.");
+    };
+
+    recognition.onerror = function() {
+        speak("Sorry. I could not hear you.");
+    };
+
+    recognition.start();
+}
+
+
+function updateClock() {
+
+    const now = new Date();
+
+    document.getElementById("clock").innerText =
+        now.toLocaleTimeString();
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+</script>
+
+</body>
+</html>
